@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./styles.css";
+import Todo from "./Todo";
 
-function App() {
+export default function App() {
+  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [count, setCount] = useState(0);
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    const newTodo = {
+      id: todos.length + 1,
+      description: todo
+    };
+    const updatedTodos = [...todos, newTodo];
+    setTodos(updatedTodos);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <input
+          type="text"
+          value={todo}
+          onChange={(e) => setTodo(e.target.value)}
+          placeholder="write todo task..."
+        />
+        <button onClick={(e) => handleAddTodo(e)}> Add Todo </button>
+      </form>
+
+      <button onClick={() => setCount((prev) => prev + 1)}> Increment </button>
+      {count}
+      <Todo todos={todos} />
     </div>
   );
 }
-
-export default App;
